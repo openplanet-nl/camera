@@ -10,7 +10,7 @@ namespace Camera
 			return vec3(0, 0, ret.w);
 		}
 		vec2 screenPos = g_displayPos + (ret.xy / ret.w + 1) / 2 * g_displaySize;
-		return vec3(screenPos.x, screenPos.y, ret.w);
+		return vec3(screenPos, ret.w);
 	}
 
 	vec2 ToScreenSpace(const vec3 &in pos)
