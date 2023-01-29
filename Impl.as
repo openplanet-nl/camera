@@ -63,6 +63,13 @@ namespace Camera
 		axis = axis * mat4::Rotate(h, vec3(0, 1, 0));
 
 		orbital.m_TargetedPosition = pos;
-		orbital.Pos = pos + axis.xyz * orbital.m_CameraToTargetDistance;
+
+		vec3 newCameraPos = pos + axis.xyz * orbital.m_CameraToTargetDistance;
+#if TMNEXT
+		orbital.Pos = newCameraPos;
+#else
+		//TODO: This is correct for Maniaplanet, but probably not for Turbo
+		Dev::SetOffset(orbital, 0x44, newCameraPos);
+#endif
 	}
 }
