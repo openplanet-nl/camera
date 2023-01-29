@@ -1,0 +1,49 @@
+CHmsCamera@ g_currentCamera = null;
+
+mat4 g_projection = mat4::Identity();
+vec3 g_position = vec3();
+float g_width = 0;
+float g_height = 0;
+
+void RenderEarly()
+{
+	auto viewport = GetApp().Viewport;
+
+	@g_currentCamera = null;
+	for (int i = int(viewport.Cameras.Length) - 1; i >= 0; i--) {
+		auto camera = viewport.Cameras[i];
+#if TMNEXT
+		if (camera.m_IsOverlay3d) {
+			continue;
+		}
+#else
+		if (camera.IsOverlay3d) {
+			continue;
+		}
+#endif
+		@g_currentCamera = camera;
+		break;
+	}
+
+	if (g_currentCamera !is null) {
+		iso4 camLoc = g_currentCamera.Location;
+		float camFov = g_currentCamera.Fov;
+		float camNearZ = g_currentCamera.NearZ;
+		float camFarZ = g_currentCamera.FarZ;
+#if TMNEXT
+		float camAspect = g_currentCamera.Width_Height;
+#else
+		float camAspect = g_currentCamera.RatioXY;
+#endif
+
+		mat4 projection = mat4::Perspective(camFov, camAspect, camNearZ, camFarZ);
+		mat4 translation = mat4::Translate(vec3(camLoc.tx, camLoc.ty, camLoc.tz));
+		mat4 rotation = mat4::Inverse(mat4::Inverse(translation) * mat4(camLoc));
+
+		g_projection = projection * mat4::Inverse(translation * rotation);
+		g_position = vec3(camLoc.tx, camLoc.ty, camLoc.tz);
+
+		g_width = Draw::GetWidth();
+		g_height = Draw::GetHeight();
+	}
+}

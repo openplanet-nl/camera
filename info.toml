@@ -1,0 +1,9 @@
+[meta]
+name = "Camera"
+author = "Miss"
+category = "Developer"
+essential = true
+
+[script]
+exports = [ "Export.as" ]
+timeout = 0
