@@ -2,8 +2,9 @@ CHmsCamera@ g_currentCamera = null;
 
 mat4 g_projection = mat4::Identity();
 vec3 g_position = vec3();
-float g_width = 0;
-float g_height = 0;
+
+vec2 g_displayPos;
+vec2 g_displaySize;
 
 void RenderEarly()
 {
@@ -43,7 +44,10 @@ void RenderEarly()
 		g_projection = projection * mat4::Inverse(translation * rotation);
 		g_position = vec3(camLoc.tx, camLoc.ty, camLoc.tz);
 
-		g_width = Draw::GetWidth();
-		g_height = Draw::GetHeight();
+		vec2 topLeft = 1 - (g_currentCamera.DrawRectMax + 1) / 2;
+		vec2 bottomRight = 1 - (g_currentCamera.DrawRectMin + 1) / 2;
+		g_displaySize = vec2(Draw::GetWidth(), Draw::GetHeight());
+		g_displayPos = topLeft * g_displaySize;
+		g_displaySize *= bottomRight - topLeft;
 	}
 }
