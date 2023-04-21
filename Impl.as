@@ -77,4 +77,8 @@ namespace Camera
 		Dev::SetOffset(orbital, 0x44, newCameraPos);
 #endif
 	}
+
+	ActiveCam GetCurrentGameCamera() {
+		return g_activeCam;
+	}
 }

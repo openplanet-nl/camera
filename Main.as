@@ -8,14 +8,12 @@ vec3 g_direction = vec3();
 vec2 g_displayPos;
 vec2 g_displaySize;
 
+ActiveCam g_activeCam = ActiveCam::None;
+
 void RenderEarly()
 {
-    // SetStatusRunning();
 	UpdateActiveGameCam();
-	// SetStatusDone();
 
-	auto t = float(Time::Now % 1000) / 1000.0;
-	// SetFreeCamPos(vec3(Math::Lerp(860.0, 880.0, t), Math::Lerp(16.0, 60.0, t), Math::Lerp(726.0, 780.0, t)));
 	auto viewport = GetApp().Viewport;
 
 	@g_currentCamera = null;

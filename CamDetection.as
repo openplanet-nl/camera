@@ -1,30 +1,12 @@
-/** Render function called every frame intended only for menu items in the main menu of the `UI`.
-*/
-void RenderMenuMain() {
+void RenderMenuMain()
+{
+	if (!Setting_DebugShowActiveCamInMenu) {
+		return;
+	}
 	UI::BeginDisabled();
-	UI::MenuItem("Current Cam: " + tostring(g_activeCam));
+	UI::MenuItem("Active Cam: " + tostring(g_activeCam));
 	UI::EndDisabled();
 }
-
-const string JsonStatusFile = IO::FromStorageFolder("status.json");
-
-void SetStatusRunning() {
-	auto j = Json::Object();
-	j['running'] = true;
-	j['timestamp'] = Time::Stamp;
-	j['now'] = Time::Now;
-	Json::ToFile(JsonStatusFile, j);
-}
-
-void SetStatusDone() {
-	auto j = Json::Object();
-	j['running'] = false;
-	j['timestamp'] = Time::Stamp;
-	j['now'] = Time::Now;
-	Json::ToFile(JsonStatusFile, j);
-}
-
-ActiveCam g_activeCam = ActiveCam::Loading;
 
 void UpdateActiveGameCam()
 {
@@ -44,7 +26,7 @@ void UpdateActiveGameCam()
 	auto camModelNod = Dev::GetOffsetNod(gameCameraNod, 0x58);
 	auto camControlNod = Dev::GetOffsetNod(gameCameraNod, 0x68);
 
-	// 0x2AC has a flag related to using internal cam (which is what the backwards cam is)
+	// Always 4 when backwards, and seemingly always 0 otherwise
 	bool isBackwards = Dev::GetOffsetUint32(gameCameraNod, 0xB0) == 0x4;
 
 	if (isBackwards) {
