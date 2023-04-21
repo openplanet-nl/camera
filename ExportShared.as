@@ -1,0 +1,21 @@
+shared enum ActiveCam {
+	None = 0,
+	Cam1 = 1,
+	Cam2 = 2,
+	Cam3 = 3,
+	Cam1Alt = 4,
+	Cam2Alt = 5,
+	Cam3Alt = 6,
+	FreeCam = 7,
+	Backwards = 8,
+	EditorOrbital,
+	Orbital3d,
+	Helico,
+	HmdExternal,
+	ThirdPerson,
+	FirstPerson,
+	Target,
+	Cam0,
+	Other,
+	Loading
+}

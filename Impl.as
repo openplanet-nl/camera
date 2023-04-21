@@ -41,6 +41,11 @@ namespace Camera
 		return g_position;
 	}
 
+	vec3 GetCurrentLookingDirection()
+	{
+		return g_direction;
+	}
+
 	void SetEditorOrbitalTarget(const vec3 &in pos)
 	{
 		auto editor = cast<CGameCtnEditorCommon>(GetApp().Editor);
