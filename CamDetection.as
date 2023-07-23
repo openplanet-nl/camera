@@ -5,9 +5,7 @@ void RenderMenuMain()
 	if (!Setting_DebugShowActiveCamInMenu) {
 		return;
 	}
-	UI::BeginDisabled();
-	UI::MenuItem("Active Cam: " + tostring(g_activeCam));
-	UI::EndDisabled();
+	UI::TextDisabled("Active Cam: " + tostring(g_activeCam));
 }
 
 const Reflection::MwClassInfo@ tmTy = Reflection::GetType("CTrackMania");
