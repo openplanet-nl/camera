@@ -78,7 +78,8 @@ namespace Camera
 #endif
 	}
 
-	ActiveCam GetCurrentGameCamera() {
+	ActiveCam GetCurrentGameCamera()
+	{
 		return g_activeCam;
 	}
 }

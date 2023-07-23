@@ -47,8 +47,10 @@ void UpdateActiveGameCam()
 			// this happens with CharacterPilot maps
 			g_activeCam = ActiveCam::Helico;
 		} else {
+#if SIG_DEVELOPER
 			trace('1 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
 			UI::ShowNotification('1 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
+#endif
 			g_activeCam = ActiveCam::Other;
 		}
 	} else if (camControlNod !is null) {
@@ -81,32 +83,17 @@ void UpdateActiveGameCam()
 			// We probably won't ever end up here, but just in case.
 			g_activeCam = ActiveCam::Other;
 		} else {
+			// debug so we know that a cam is unknown
+#if SIG_DEVELOPER
 			trace('2 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
 			UI::ShowNotification('2 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
+#endif
 			g_activeCam = ActiveCam::Other;
 		}
 	} else {
 		// initalizing editor, when in mediatracker
 		g_activeCam = ActiveCam::Loading;
 	}
-}
-
-bool TestCam1Alt(CMwNod@ camNod)
-{
-	// alt 00 00 40 40, main: 00 00 a0 40 -- constant after restart
-	return Dev::GetOffsetUint32(camNod, 0x38) == 0x40400000;
-}
-
-bool TestCam2Alt(CMwNod@ camNod)
-{
-	// alt: 00 00 8C 42, main: 00 00 96 42 -- constant after game restart
-	return Dev::GetOffsetUint32(camNod, 0x38) == 0x428c0000;
-}
-
-bool TestCam3Alt(CMwNod@ camNod)
-{
-	// std: 0, alt: 1
-	return Dev::GetOffsetUint32(camNod, 0x34) == 1;
 }
 
 const uint ClsId_CPlugVehicleCameraRace2Model = Reflection::GetType("CPlugVehicleCameraRace2Model").ID;
@@ -132,7 +119,7 @@ const uint ClsId_CGameControlCameraVehicleInternal = Reflection::GetType("CGameC
 
 void UpdateActiveGameCam()
 {
-	// not supported in MP4 / Turbo
+	// not supported yet in MP4 / Turbo
 }
 
 #endif
