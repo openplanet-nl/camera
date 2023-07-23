@@ -46,8 +46,7 @@ void RenderEarly()
 
 		mat4 projection = mat4::Perspective(camFov, camAspect, camNearZ, camFarZ);
 		mat4 translation = mat4::Translate(vec3(camLoc.tx, camLoc.ty, camLoc.tz));
-		mat4 inverseTranslation = mat4::Inverse(translation);
-		g_rotation = mat4::Inverse(inverseTranslation * camLocMat);
+		g_rotation = mat4::Inverse(mat4::Inverse(translation) * camLocMat);
 
 		g_projection = projection * mat4::Inverse(translation * g_rotation);
 		g_position = vec3(camLoc.tx, camLoc.ty, camLoc.tz);
