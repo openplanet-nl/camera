@@ -41,6 +41,11 @@ namespace Camera
 		return g_position;
 	}
 
+	vec3 GetCurrentLookingDirection()
+	{
+		return g_direction;
+	}
+
 	void SetEditorOrbitalTarget(const vec3 &in pos)
 	{
 		auto editor = cast<CGameCtnEditorCommon>(GetApp().Editor);
@@ -71,5 +76,10 @@ namespace Camera
 		//TODO: This is correct for Maniaplanet, but probably not for Turbo
 		Dev::SetOffset(orbital, 0x44, newCameraPos);
 #endif
+	}
+
+	ActiveCam GetCurrentGameCamera()
+	{
+		return g_activeCameraType;
 	}
 }

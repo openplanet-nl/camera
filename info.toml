@@ -6,4 +6,5 @@ essential = true
 
 [script]
 exports = [ "Export.as" ]
+shared_exports = [ "ExportShared.as" ]
 timeout = 0

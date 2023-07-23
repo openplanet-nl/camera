@@ -20,6 +20,12 @@ namespace Camera
 	// Gets the current camera position.
 	import vec3 GetCurrentPosition() from "Camera";
 
+	// Gets the current camera looking direction.
+	import vec3 GetCurrentLookingDirection() from "Camera";
+
 	// In the editor, sets the currently focused camera position of the orbital camera.
 	import void SetEditorOrbitalTarget(const vec3 &in pos) from "Camera";
+
+	// Gets the currently active game camera.
+	import ActiveCam GetCurrentGameCamera() from "Camera";
 }
