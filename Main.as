@@ -8,7 +8,7 @@ vec3 g_direction = vec3();
 vec2 g_displayPos;
 vec2 g_displaySize;
 
-ActiveCam g_activeCam = ActiveCam::None;
+ActiveCam g_activeCameraType = ActiveCam::None;
 
 void RenderEarly()
 {

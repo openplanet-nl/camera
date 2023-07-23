@@ -80,6 +80,6 @@ namespace Camera
 
 	ActiveCam GetCurrentGameCamera()
 	{
-		return g_activeCam;
+		return g_activeCameraType;
 	}
 }

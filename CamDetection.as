@@ -5,7 +5,7 @@ void RenderMenuMain()
 	if (!Setting_DebugShowActiveCamInMenu) {
 		return;
 	}
-	UI::TextDisabled("Active Cam: " + tostring(g_activeCam));
+	UI::TextDisabled("Active Cam: " + tostring(g_activeCameraType));
 }
 
 const Reflection::MwClassInfo@ tmTy = Reflection::GetType("CTrackMania");
@@ -14,7 +14,7 @@ const uint GameCameraNodOffset = gameSceneMember.Offset + 0x10;
 
 void UpdateActiveGameCam()
 {
-	g_activeCam = ActiveCam::None;
+	g_activeCameraType = ActiveCam::None;
 
 	auto gameCameraNod = Dev::GetOffsetNod(GetApp(), GameCameraNodOffset);
 
@@ -34,65 +34,65 @@ void UpdateActiveGameCam()
 	bool isBackwards = Dev::GetOffsetUint32(gameCameraNod, 0xB0) == 0x4;
 
 	if (isBackwards) {
-		g_activeCam = ActiveCam::Backwards;
+		g_activeCameraType = ActiveCam::Backwards;
 	} else if (camModelNod !is null) {
 		auto ty = Reflection::TypeOf(camModelNod);
 		if (ty.ID == ClsId_CPlugVehicleCameraRace2Model) {
-			g_activeCam = cam1Alt ? ActiveCam::Cam1Alt : ActiveCam::Cam1;
+			g_activeCameraType = cam1Alt ? ActiveCam::Cam1Alt : ActiveCam::Cam1;
 		} else if (ty.ID == ClsId_CPlugVehicleCameraRace3Model) {
-			g_activeCam = cam2Alt ? ActiveCam::Cam2Alt : ActiveCam::Cam2;
+			g_activeCameraType = cam2Alt ? ActiveCam::Cam2Alt : ActiveCam::Cam2;
 		} else if (ty.ID == ClsId_CPlugVehicleCameraInternalModel) {
-			g_activeCam = cam3Alt ? ActiveCam::Cam3Alt : ActiveCam::Cam3;
+			g_activeCameraType = cam3Alt ? ActiveCam::Cam3Alt : ActiveCam::Cam3;
 		} else if (ty.ID == ClsId_CPlugVehicleCameraHelicoModel) {
 			// this happens with CharacterPilot maps
-			g_activeCam = ActiveCam::Helico;
+			g_activeCameraType = ActiveCam::Helico;
 		} else {
 #if SIG_DEVELOPER
 			trace('1 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
 			UI::ShowNotification('1 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
 #endif
-			g_activeCam = ActiveCam::Other;
+			g_activeCameraType = ActiveCam::Other;
 		}
 	} else if (camControlNod !is null) {
 		auto ty = Reflection::TypeOf(camControlNod);
 		if (ty.ID == ClsId_CGameControlCameraFree) {
-			g_activeCam = ActiveCam::FreeCam;
+			g_activeCameraType = ActiveCam::FreeCam;
 		} else if (ty.ID == ClsId_CGameControlCameraEditorOrbital) {
-			g_activeCam = ActiveCam::EditorOrbital;
+			g_activeCameraType = ActiveCam::EditorOrbital;
 		} else if (ty.ID == ClsId_CGameControlCameraOrbital3d) {
-			g_activeCam = ActiveCam::Orbital3d;
+			g_activeCameraType = ActiveCam::Orbital3d;
 		} else if (ty.ID == ClsId_CGameControlCameraHelico) {
-			g_activeCam = ActiveCam::Helico;
+			g_activeCameraType = ActiveCam::Helico;
 		} else if (ty.ID == ClsId_CGameControlCameraHmdExternal) {
-			g_activeCam = ActiveCam::HmdExternal;
+			g_activeCameraType = ActiveCam::HmdExternal;
 		} else if (ty.ID == ClsId_CGameControlCameraThirdPerson) {
-			g_activeCam = ActiveCam::ThirdPerson;
+			g_activeCameraType = ActiveCam::ThirdPerson;
 		} else if (ty.ID == ClsId_CGameControlCameraFirstPerson) {
-			g_activeCam = ActiveCam::FirstPerson;
+			g_activeCameraType = ActiveCam::FirstPerson;
 		} else if (ty.ID == ClsId_CGameControlCameraTarget) {
-			g_activeCam = ActiveCam::Target;
+			g_activeCameraType = ActiveCam::Target;
 		} else if (ty.ID == ClsId_CGameControlCameraTrackManiaRace) {
-			g_activeCam = ActiveCam::Cam0;
+			g_activeCameraType = ActiveCam::Cam0;
 		} else if (ty.ID == ClsId_CGameControlCameraTrackManiaRace2) {
-			g_activeCam = ActiveCam::Cam1;
+			g_activeCameraType = ActiveCam::Cam1;
 		} else if (ty.ID == ClsId_CGameControlCameraTrackManiaRace3) {
-			g_activeCam = ActiveCam::Cam2;
+			g_activeCameraType = ActiveCam::Cam2;
 		} else if (ty.ID == ClsId_CGameControlCameraVehicleInternal) {
-			g_activeCam = ActiveCam::Cam3;
+			g_activeCameraType = ActiveCam::Cam3;
 		} else if (ty.ID == ClsId_CGameControlCamera) {
 			// We probably won't ever end up here, but just in case.
-			g_activeCam = ActiveCam::Other;
+			g_activeCameraType = ActiveCam::Other;
 		} else {
 			// debug so we know that a cam is unknown
 #if SIG_DEVELOPER
 			trace('2 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
 			UI::ShowNotification('2 Got cam of unknown type: ' + ty.ID + ', ' + ty.Name);
 #endif
-			g_activeCam = ActiveCam::Other;
+			g_activeCameraType = ActiveCam::Other;
 		}
 	} else {
 		// initalizing editor, when in mediatracker
-		g_activeCam = ActiveCam::Loading;
+		g_activeCameraType = ActiveCam::Loading;
 	}
 }
 
