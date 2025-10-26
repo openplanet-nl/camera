@@ -31,6 +31,11 @@ namespace Camera
 		return g_currentCamera;
 	}
 
+	CHmsCamera@ FindCurrent()
+	{
+		return FindCurrentCamera();
+	}
+
 	mat4 GetProjectionMatrix()
 	{
 		return g_projection;

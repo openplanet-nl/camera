@@ -14,6 +14,11 @@ namespace Camera
 	// Gets the current camera used for rendering.
 	import CHmsCamera@ GetCurrent() from "Camera";
 
+	// Finds the current camera used for rendering by looping over all cameras. This is normally
+	// already done for you in EarlyRender and can be retrieved through GetCurrent, which you should
+	// prefer over this more expensive direct search.
+	import CHmsCamera@ FindCurrent() from "Camera";
+
 	// Gets the projection matrix of the current camera, if there is one.
 	import mat4 GetProjectionMatrix() from "Camera";
 

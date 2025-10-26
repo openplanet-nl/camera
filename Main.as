@@ -6,11 +6,9 @@ vec3 g_position = vec3();
 vec2 g_displayPos;
 vec2 g_displaySize;
 
-void RenderEarly()
+CHmsCamera@ FindCurrentCamera()
 {
 	auto viewport = GetApp().Viewport;
-
-	@g_currentCamera = null;
 	for (int i = int(viewport.Cameras.Length) - 1; i >= 0; i--) {
 		auto camera = viewport.Cameras[i];
 #if TMNEXT
@@ -26,10 +24,14 @@ void RenderEarly()
 			continue;
 		}
 #endif
-		@g_currentCamera = camera;
-		break;
+		return camera;
 	}
+	return null;
+}
 
+void RenderEarly()
+{
+	@g_currentCamera = FindCurrentCamera();
 	if (g_currentCamera !is null) {
 		iso4 camLoc = g_currentCamera.Location;
 		float camFov = g_currentCamera.Fov;
