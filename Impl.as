@@ -43,6 +43,9 @@ namespace Camera
 
 	void SetEditorOrbitalTarget(const vec3 &in pos)
 	{
+#if FOREVER
+		throw("SetEditorOrbitalTarget is currently not supported on TrackMania Forever");
+#else
 		auto editor = cast<CGameCtnEditorCommon>(GetApp().Editor);
 		if (editor is null) {
 			throw("Not in editor");
@@ -70,6 +73,7 @@ namespace Camera
 #else
 		//TODO: This is correct for Maniaplanet, but probably not for Turbo
 		Dev::SetOffset(orbital, 0x44, newCameraPos);
+#endif
 #endif
 	}
 }

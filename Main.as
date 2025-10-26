@@ -17,6 +17,10 @@ void RenderEarly()
 		if (camera.m_IsOverlay3d) {
 			continue;
 		}
+#elif FOREVER
+		if (camera.NearZ >= 100.0f /* Menu camera */ || !camera.UseViewDependantRendering) {
+			continue;
+		}
 #else
 		if (camera.IsOverlay3d) {
 			continue;
