@@ -63,6 +63,19 @@ namespace Camera
 			return;
 		}
 
+#if TURBO
+		float h = (orbital.CurrentHAngle + Math::PI / 2) * -1;
+		float v = orbital.CurrentVAngle;
+
+		vec4 axis(1, 0, 0, 0);
+		axis = axis * mat4::Rotate(v, vec3(0, 0, -1));
+		axis = axis * mat4::Rotate(h, vec3(0, 1, 0));
+
+		orbital.TargetedPosition = pos;
+
+		vec3 newCameraPos = pos + axis.xyz * orbital.CameraToTargetDistance;
+
+#else
 		float h = (orbital.m_CurrentHAngle + Math::PI / 2) * -1;
 		float v = orbital.m_CurrentVAngle;
 
@@ -73,6 +86,8 @@ namespace Camera
 		orbital.m_TargetedPosition = pos;
 
 		vec3 newCameraPos = pos + axis.xyz * orbital.m_CameraToTargetDistance;
+#endif
+
 #if TMNEXT
 		orbital.Pos = newCameraPos;
 #else
