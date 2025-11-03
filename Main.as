@@ -52,7 +52,7 @@ void RenderEarly()
 
 		vec2 topLeft = 1 - (g_currentCamera.DrawRectMax + 1) / 2;
 		vec2 bottomRight = 1 - (g_currentCamera.DrawRectMin + 1) / 2;
-		g_displaySize = vec2(Draw::GetWidth(), Draw::GetHeight());
+		g_displaySize = Display::GetSize();
 		g_displayPos = topLeft * g_displaySize;
 		g_displaySize *= bottomRight - topLeft;
 	}
